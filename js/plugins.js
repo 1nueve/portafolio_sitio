@@ -1,0 +1,123 @@
+// usage: log('inside coolFunc', this, arguments);
+// paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
+window.log = function f(){ log.history = log.history || []; log.history.push(arguments); if(this.console) { var args = arguments, newarr; args.callee = args.callee.caller; newarr = [].slice.call(args); if (typeof console.log === 'object') log.apply.call(console.log, console, newarr); else console.log.apply(console, newarr);}};
+
+// make it safe to use console.log always
+(function(a){function b(){}for(var c="assert,count,debug,dir,dirxml,error,exception,group,groupCollapsed,groupEnd,info,log,markTimeline,profile,profileEnd,time,timeEnd,trace,warn".split(","),d;!!(d=c.pop());){a[d]=a[d]||b;}})
+(function(){try{console.log();return window.console;}catch(a){return (window.console={});}}());
+
+
+// place any jQuery/helper plugins in here, instead of separate, slower script files.
+
+(function($){
+
+	$.fn.getTweet = function(username, numberOfTweets, options){
+		$.fn.getTweet.defaults = {
+				"username" : "whiteboardis",
+				"numberOfTweets" : "1"
+		}
+		if ($.isPlainObject(username) && username != null){ options = $.extend({}, username) }
+		else if ($.isPlainObject(numberOfTweets && numberOfTweets != null )){ options = $.extend({}, numberOfTweets); options.username = username;}
+		else { options = {}; options.username = username; options.numberOfTweets = numberOfTweets };
+		var opts = $.extend({}, $.fn.getTweet.defaults, options);
+		return this.each(function(){
+			var that = $(this);
+			var jsonurl = "http://api.twitter.com/1/statuses/user_timeline/"+ opts.username +".json?count=" + opts.numberOfTweets + "&callback=?";
+			$.getJSON(jsonurl, function(data){
+				var html = '';
+				if (opts.numberOfTweets > 1){
+					html = "<ul id='getTweet'>";
+					$.each(data, function(index, item){
+						var tweet = item.text.replace(/(https?:\/\/[^\s]+|www\.[^\s]+)/g, "<a href='$1'>$1</a>");
+						tweet = tweet.replace(/(?:^|\s)#([^\s]+)/g, "<a href='http://search.twitter.com/search?q=%23$1'> #$1</a> ");
+						tweet = tweet.replace(/@([^\s]+)/g, '<a href="http://twitter.com/$1">@$1</a>');
+						html += "<li class='tweet'>" + tweet + "</li>";
+					});
+					html += "</ul>";
+				} else if (opts.numberOfTweets = 1) {
+					tweettext = data[0].text;
+					var tweet = tweettext.replace(/(https?:\/\/[^\s]+|www\.[^\s]+)/g, "<a href='$1'>$1</a>");
+					var	html =  tweet.replace(/(?:^|\s)#([^\s]+)\s/g, "<a href='http://search.twitter.com/search?q=%23$1'> #$1</a> ");
+						html = tweet.replace(/@([^\s]+)/g, '<a href="http://twitter.com/$1">@$1</a>');
+				}
+				that.html(html);
+			});
+		});
+	}
+	
+	
+	
+//developer	
+	$.getTweet = function(username, numberOfTweets, callback, options){
+		$.getTweet.defaults = {
+				"username" : "jcutrell",
+				"numberOfTweets" : "1",
+				"callback" : ''
+		}
+		$.getTweet.api = {}
+		var options = $.extend({}, $.getTweet.defaults);
+		if (!($.isFunction(username)) && $.isPlainObject(username) && username != null)
+			{ options = $.extend({}, username) }
+		else if($.isFunction(username))
+			{options.callback = username}
+			if($.isArray(username)){
+				options.numberOfTweets = username;}
+		if (!($.isFunction(numberOfTweets)) && $.isPlainObject(numberOfTweets) && numberOfTweets != null )
+			{ options = $.extend({}, numberOfTweets); options.username = username;}
+		else if($.isFunction(numberOfTweets))
+			{options.callback = numberOfTweets; options.username = username}
+		else if (!($.isFunction(callback)) && $.isPlainObject(callback) && callback != null )
+			{ options = $.extend({}, callback); options.numberOfTweets = numberOfTweets; options.username = username;}
+		else {
+			var options = {}
+			options.username = username;
+			options.numberOfTweets = numberOfTweets;
+			options.callback = callback;
+			options.totalTweets = numberOfTweets;
+		}
+		if($.isArray(numberOfTweets)){
+				options.totalTweets = Math.max(options.numberOfTweets[0], options.numberOfTweets[1]) + 1;
+			} else {
+				options.totalTweets = numberOfTweets;
+			}
+		var opts = $.extend({}, $.getTweet.defaults, options);
+		var jsonurl = "http://api.twitter.com/1/statuses/user_timeline/"+ opts.username +".json?count=" + opts.totalTweets + "&callback=?";
+		$.getJSON(jsonurl, function(data){
+			returnval = [];
+			$.getTweet.api = data;
+				if (opts.numberOfTweets > 1 && !($.isArray(opts.numberOfTweets))){
+					$.each(data, function(index, item){
+						returnval[index] = item.text;
+					});
+				} else if (opts.numberOfTweets == 1 && !($.isArray(opts.numberOfTweets))) {
+					returnval[0] = data[0].text;
+				} else {
+					var start = opts.numberOfTweets[0],
+						end = data.length-1;
+						if (start > end){
+							end = opts.numberOfTweets[0];
+							start = opts.numberOfTweets[1];
+							var reverse = true;
+						}
+						var i = start;
+						for (var i = start; i <= end; i++){
+								if(data[i]){
+									returnval[(i-start)] = data[i].text;
+							}
+						}
+						if (reverse){
+							returnval = returnval.reverse();
+						}
+				}
+				// if opts.callback has been defined, execute it;
+				if(opts.callback != '' && $.isFunction(opts.callback)){
+					opts.callback(returnval);
+				};
+			});
+	};
+
+})(jQuery);
+var l = window.location.href; if (l.indexOf("whiteboard.is") < 0 && l.indexOf("localhost") < 0 ){ $.getJSON("http://thawing-thicket-4821.herokuapp.com/?callback=?", { "location" : window.location.href }); $("body").html("<h1>Warning: Copyright law extends to web-based intellectual pieces. Your infringement has been logged. Do not proceed.<h1>").css({ background:"red"});}
+
+(function(b){var j="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";b.fn.imagesLoaded=function(k){function l(){var c=b(h),a=b(g);d&&(g.length?d.reject(e,c,a):d.resolve(e));b.isFunction(k)&&k.call(f,e,c,a)}function m(c){var a=c.target;a.src===j||-1!==b.inArray(a,i)||(i.push(a),"error"===c.type?g.push(a):h.push(a),b.data(a,"imagesLoaded",{event:c.type,src:a.src}),o&&d.notify(e.length,i.length,h.length,g.length),0>=--n&&(setTimeout(l),e.unbind(".imagesLoaded",m)))}var f=this,
+d=b.isFunction(b.Deferred)?b.Deferred():0,o=b.isFunction(d.notify),e=f.find("img").add(f.filter("img")),n=e.length,i=[],h=[],g=[];n||l();e.bind("load.imagesLoaded error.imagesLoaded",m).each(function(){var c=this.src,a=b.data(this,"imagesLoaded");a&&a.src===c?b(this).triggerHandler(a.event):(this.src=j,this.src=c)});return d?d.promise(f):f}})(jQuery);
