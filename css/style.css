@@ -109,7 +109,7 @@ p.overview{font-size:200%;line-height:1.6em;}
 #about-top .large{font-size:5em;}
 
 /*Cambiando la imagen de Portafolio superior*/
-#about-top{background:url(../img/portada.jpg) no-repeat center center;background-attachment:fixed;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;min-width:1024px;min-height:768px;}#about-top .full-wrap{position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:25;background-image:url(../img/dot-pattern.png);}
+#about-top{background:url(../img/slides-portafolio/portada.jpg) no-repeat center center;background-attachment:fixed;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;min-width:1024px;min-height:768px;}#about-top .full-wrap{position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:25;background-image:url(../img/dot-pattern.png);}
 
 #about-top .large{font-size:4em;color:#fff;}
 #about-top #slide-down{width:40px;height:40px;background-color:#fff !important;display:inline-block;overflow:auto;z-index:50;position:absolute;bottom:40px;right:40px;opacity:0.8;cursor:pointer;background:url(../img/slide-arrow-down-grey.png) no-repeat center;}#about-top #slide-down:hover{opacity:1;}
@@ -132,8 +132,10 @@ p.overview{font-size:200%;line-height:1.6em;}
 .twitter-wrap .right{width:65%;float:right;height:140px;margin-left:20px;padding-left:20px;border-left:1px solid rgba(256, 256, 256, 0.2);}
 .twitter-wrap a.twitter-name{font-size:30px;}
 .twitter-wrap .tweet-text{font-size:20px;line-height:1.6em;}
+
 .contact{background:url(../img/bg-contact.jpg) no-repeat center center fixed;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;position:relative;display:block;font-family:'Merriweather',Georgia,serif;}.contact .text-black-bg{padding:20px;line-height:1.6em;}
 .contact .dots{width:100%;height:100%;overflow:auto;padding:0px;background-image:url(../img/dot-pattern.png);}
+
 .contact-us{height:552px;}
 #about-content{z-index:5;box-shadow:1px 1px 20px rgba(0, 0, 0, 0.6);}
 .no-rgba #about-content{box-shadow:1px 1px 20px #000000;}
@@ -144,18 +146,19 @@ p{margin:6px 0px 12px 0px;}
 
 /*Cambiando la segunda imagen por la de Que Hacemos
 .photo-bar.about-disciplines{background-image:url(../img/about-disciplines-1920.jpg);}*/
-.photo-bar.about-disciplines{background-image:url(../img/que-hacemos.jpg);}
+.photo-bar.about-disciplines{background-image:url(../img/slides-portafolio/que-hacemos.jpg);}
 
 /*Cambiando la tercera imagen por la de Objetivo
 .photo-bar.pathway{background-image:url(../img/about-pathway.jpg);}*/
-.photo-bar.pathway{background-image:url(../img/objetivo.jpg);}
+.photo-bar.pathway{background-image:url(../img/slides-portafolio/objetivo.jpg);}
 
 /*Cambiando la cuarta imagen por la de Como lo hacemos
 .photo-bar.storytellers{background-image:url(../img/bg-about-color.jpg);}*/
-.photo-bar.storytellers{background-image:url(../img/como-lo-hacemos.jpg);}
+.photo-bar.storytellers{background-image:url(../img/slides-portafolio/como-lo-hacemos.jpg);}
 
 
-.photo-bar.work-with{background-image:url(../img/bg-who-we-do-work-with.jpg);}.photo-bar.work-with .container_24{padding:40px 0px;font-size:60%;}
+.photo-bar.work-with{background-image:url(../img/slides-portafolio/beneficios.jpg);}.photo-bar.work-with .container_24{padding:40px 0px;font-size:60%;}
+
 
 .photo-bar .large{font-size:150%;}
 .photo-bar .small *{font-size:80%;line-height:1.6em;}
